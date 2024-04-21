@@ -24,6 +24,7 @@ public class Bag<T> {
 		}
 	}
 	
+	//Method that removes one occurrence of an item from the bag
 	public void remove(T item) {
 		//Check if item exists in bag
 		if(items.containsKey(item)){
@@ -38,9 +39,19 @@ public class Bag<T> {
 		}
 	}
 	
+	//Method that returns true if an item exists in the bag
 	public boolean contains(T item) {
 		//Check if item exists in bag
 		return items.containsKey(item);
+	}
+	
+	//Method that returns the number of occurrences of an item in the bag
+	public int count(T item) {
+		return items.getOrDefault(item, 0);
+	}
+	
+	public Map<T, Integer> getItems(){
+		return items;
 	}
 
 }
