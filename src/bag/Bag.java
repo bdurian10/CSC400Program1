@@ -54,12 +54,33 @@ public class Bag<T> {
 		return items;
 	}
 	
+	public int size() {
+		int size = 0;
+		for(int value : getItems().values()) {
+			size += value;
+		}
+		return size;
+	}
+	
+	public void merge(Bag<T> otherBag) {
+		otherBag.getItems().forEach((key, value) -> items.merge(key, value, (oldValue, newValue) -> oldValue + newValue));
+	}
+	
+	public Bag<T> distinct(){
+		Bag<T> distinctBag = new Bag<>();
+		for(T item : items.keySet()) {
+			distinctBag.add(item);
+		}
+		return distinctBag;
+	}
+	
 	//Main Method for testing
 	public static void main(String[] args) {
 			
 			Bag<String> words = new Bag<>();
+			Bag<String> words2 = new Bag<>();
 			
-			//Add strings to bag, including duplicates
+			//Add strings to words, including duplicates
 			words.add("Hello");
 			words.add("Hello");
 			words.add("World");
@@ -69,14 +90,36 @@ public class Bag<T> {
 			words.add("California");
 			words.add("Hello");
 			
-			//Print items in Bag
-			System.out.println(words.getItems());
+			//Add strings to words2
+			words2.add("Hello");
+			words2.add("Hello");
+			words2.add("World");
+			words2.add("Counter");
 			
-			/*Test contains method
+			//Print items in words
+			System.out.println("Words Contains: " + words.getItems());
+			System.out.println("Words Size: " + words.size() + "\n");
+			
+			//Print items in words2
+			System.out.println("Words2 Contains: " + words2.getItems());
+			System.out.println("Words2 Size: " + words2.size() + "\n");
+			
+			//Test merging of words and words2
+			System.out.println("Merging Words with Words2...");
+			words.merge(words2);
+			System.out.println("Merged Bag Contents: " + words.getItems() + "\n");
+			
+			//Create distinctBag from words
+			Bag<String> distinctBag = words.distinct();
+			System.out.println("Creating distinctBag from Words...");
+			System.out.println("Distinct Entries in Words: " + distinctBag.getItems());
+			
+			/*Testing for Module 1
+			 *Test contains method
 			 *A more effective test would only execute the print statement
 			 *if the result differed from the expected outcome. 
 			 *I chose to print all results for the purpose of this assignment
-			 */
+			 
 			System.out.println("****Testing Contains Method****");
 			System.out.println("Bag contains: Hello. Expected: true. Result: " + words.contains("Hello"));
 			System.out.println("Bag contains: Hotdog. Expected: false. Result: " + words.contains("Hotdog"));
@@ -104,6 +147,7 @@ public class Bag<T> {
 			System.out.println("Bag after removal of Tabletop: " + words.getItems());
 			System.out.println("Bag contains: Tabletop. Expected: false. Result: " + words.contains("Tabletop"));
 			System.out.println("Count of Tabletop: " + words.count("Tabletop"));
+			*/
 		}
 
 }
